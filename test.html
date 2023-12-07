@@ -16,10 +16,11 @@
         const List = [];
         for (let i = 0; i < Data.length; i++) {
           const ListData = Data[i];
-          const item = add("div", {}, add("p", {}, "Hello world"));
-          List.push(item);
+          const menu = add('li', {style: ListData.width}, "hello")
+          List.push(menu);
         }
-        return List;
+        //const item = add("span", {}, ...List);
+        return add('div', {id: 'root'}, "item");
       }
 
       function render(Dom) {
@@ -38,11 +39,13 @@
         }
         return element;
       }
-      const Data = [{ id: "root", text: "hello" }];
+      const Data = [
+        {width : `${50}px`}
+      ]
       const Dom = component(Data);
       console.log(render(Dom));
-      //const loot = document.getElementById('loot')
-      //loot.appendChild(render(Dom))
+      const loot = document.getElementById('loot')
+      loot.appendChild(render(Dom))
     </script>
   </body>
 </html>
