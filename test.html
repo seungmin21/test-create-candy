@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="loot"></div>
+  <script>
+    function add(typeName, props, children) {
+  return {typeName, props, children}
+  }
+
+  function component(Data) {
+    const List = [];
+    for(let i = 0; i < Data.length; i++) {
+      const ListData = Data[i]
+      const item = add('div', {id: ListData.id}, "테스트 중")
+      List.push(item)
+    }
+    return List
+  }
+
+  const Data = [{id : 'root'}]
+  const dom = component(Data)
+  console.log(dom)
+  const loot = document.getElementById('loot')
+  </script>
+</body>
+</html>
