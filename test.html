@@ -9,23 +9,41 @@
   <div id="loot"></div>
   <script>
     function add(typeName, props, children) {
-  return {typeName, props, children}
+  return {typeName, props, children : []}
   }
 
   function component(Data) {
     const List = [];
     for(let i = 0; i < Data.length; i++) {
       const ListData = Data[i]
-      const item = add('div', {id: ListData.id}, "테스트 중")
+      const item = add('div', {}, "테스트 중")
       List.push(item)
     }
     return List
   }
 
+  function render(virtualDom) {
+      if (typeof virtualDom === 'string') {
+        return document.createTextNode(virtualDom);
+      }
+      const element = document.createElement(virtualDom.typeName);
+      if (virtualDom.props) {
+        for (const [key, value] of Object.entries(virtualDom.props)) {
+          element.setAttribute(key, value);
+        }
+      }
+      //for (let i = 0; i < virtualDom.children.length; i++) {
+      //  const child = virtualDom.children[i];
+      //  element.appendChild(render(child));
+      //}
+      return element;
+    }
+  
   const Data = [{id : 'root'}]
-  const dom = component(Data)
   console.log(dom)
+  const dom = component(Data)
   const loot = document.getElementById('loot')
+  loot.appendChild(render(dom))
   </script>
-</body>
+</body>`
 </html>
