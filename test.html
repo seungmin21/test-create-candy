@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div id="loot"></div>
-  <script>
-    function add(typeName, props, children) {
-  return {typeName, props, children : []}
-  }
-
-  function component(Data) {
-    const List = [];
-    for(let i = 0; i < Data.length; i++) {
-      const ListData = Data[i]
-      const item = add('div', {}, "테스트 중")
-      List.push(item)
-    }
-    return List
-  }
-
-  function render(virtualDom) {
-      if (typeof virtualDom === 'string') {
-        return document.createTextNode(virtualDom);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="loot"></div>
+    <script>
+      function add(typeName, props, ...children) {
+        return { typeName, props, children };
       }
-      const element = document.createElement(virtualDom.typeName);
-      if (virtualDom.props) {
-        for (const [key, value] of Object.entries(virtualDom.props)) {
-          element.setAttribute(key, value);
+
+      function component(Data) {
+        const List = [];
+        for (let i = 0; i < Data.length; i++) {
+          const ListData = Data[i];
+          const item = add("div", {}, add("p", {}, "Hello world"));
+          List.push(item);
         }
+        return List;
       }
-      //for (let i = 0; i < virtualDom.children.length; i++) {
-      //  const child = virtualDom.children[i];
-      //  element.appendChild(render(child));
-      //}
-      return element;
-    }
-  
-  const Data = [{id : 'root'}]
-  console.log(dom)
-  const dom = component(Data)
-  const loot = document.getElementById('loot')
-  loot.appendChild(render(dom))
-  </script>
-</body>`
+
+      function render(Dom) {
+        if (typeof Dom === "string") {
+          return document.createTextNode(Dom);
+        }
+        const element = document.createElement(Dom.typeName);
+        if (Dom.props) {
+          for (const [key, value] of Object.entries(Dom.props)) {
+            element.setAttribute(key, value);
+          }
+        }
+        for (let i = 0; i < Dom.children.length; i++) {
+          const child = Dom.children[i];
+          element.appendChild(render(child));
+        }
+        return element;
+      }
+      const Data = [{ id: "root", text: "hello" }];
+      const Dom = component(Data);
+      console.log(render(Dom));
+      //const loot = document.getElementById('loot')
+      //loot.appendChild(render(Dom))
+    </script>
+  </body>
 </html>

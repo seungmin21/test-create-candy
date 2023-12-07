@@ -14,3 +14,20 @@ function component() {
 
 console.log(component())
 
+function render(Dom) {
+  if (typeof(Dom) === "object") {
+    return document.createTextNode(Dom)
+  }
+  const element = document.add(Dom.typeName);
+  if (Dom.props) {
+    for (const [key, value] of Object.entries(Dom.props)) {
+      element.setAttribute(key, value);
+    }
+  }
+  for (let i = 0; i < Dom.children.length; i++) {
+    const child = Dom.children[i];
+    element.appendChild(render(child));
+  }
+  return element;
+}
+console.log(render())
